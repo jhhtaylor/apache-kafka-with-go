@@ -1,80 +1,93 @@
-# apache-kafka-with-go
+# **apache-kafka-with-go**
 
-# Prerequisite
+This repository contains a demonstration of using Apache Kafka with Go.
 
-Download Kafka from https://www.apache.org/dyn/closer.cgi?path=/kafka/3.5.0/kafka_2.13-3.5.0.tgz
+## **Prerequisites**
 
-Download kafka-go
-```bash
-go get github.com/segmentio/kafka-go
-```
+1. **Download Apache Kafka**: Fetch Kafka from **[here](https://www.apache.org/dyn/closer.cgi?path=/kafka/3.5.0/kafka_2.13-3.5.0.tgz)**.
+2. **Download kafka-go**:
+    
+    ```bash
+    go get github.com/segmentio/kafka-go
+    ```
+    
 
-# Setup
+## **Setup**
 
-In two different terminal tabs
+### **Starting Kafka Servers**
 
-```bash
-cd Downloads/kafka_2.13-3.5.0
-```
+1. Open your terminal and navigate to the Kafka directory:
+    
+    ```bash
+    cd Downloads/kafka_2.13-3.5.0
+    ```
+    
+2. **Terminal Tab 1**: Start the Zookeeper server:
+    
+    ```bash
+    bin/zookeeper-server-start.sh config/zookeeper.properties
+    ```
+    
+3. **Terminal Tab 2**: Start the Kafka server:
+    
+    ```bash
+    bin/kafka-server-start.sh config/server.properties
+    ```
+    
 
-and then in each
+### **Creating a Topic**
 
-```bash
-bin/zookeeper-server-start.sh config/zookeeper.properties
-```
+1. **Terminal Tab 3**: Create a topic named **`quickstart-events`** (Only the first time):
+    
+    ```bash
+    bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092
+    ```
+    
 
-```bash
-bin/kafka-server-start.sh config/server.properties
-```
+## **Demos**
 
-## create a topic to store your events
+### **1. Quickstart Producer Console App**
 
-(you only need to do this the first time you set up a new topic)
+- **Terminal Tab 4**: Start the Kafka console producer:
+    
+    ```bash
+    bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092
+    ```
+    
+- **Terminal Tab 5**: Navigate to the **`consumer`** directory and run the Go consumer:
+    
+    ```bash
+    cd ../apache-kafka-with-go/consumer
+    go run consumer.go
+    ```
+    
 
-```bash
-bin/kafka-topics.sh --create --topic quickstart-events --bootstrap-server localhost:9092
-```
+### **2. Quickstart Consumer Console App**
 
-# Demos
+- **Terminal Tab 4**: Start the Kafka console consumer:
+    
+    ```bash
+    bashCopy code
+    bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
+    
+    ```
+    
+- **Terminal Tab 5**: Navigate to the **`producer`** directory and run the Go producer:
+    
+    ```bash
+    cd ../apache-kafka-with-go/producer
+    go run producer.go
+    ```
+    
 
-## quickstart producer console app
+### **3. Quickstart Producer and Consumer Console App**
 
-```bash
-bin/kafka-console-producer.sh --topic quickstart-events --bootstrap-server localhost:9092
-```
+You can have both the producer and consumer bash scripts (from **Terminal Tab 4**) running simultaneously in different terminals.
 
-run this with 
+*Note:* It's perfectly fine to have all the terminals (Tabs 1, 2, and both from Tab 4) running concurrently.
 
-```bash
-go run consumer.go 
-```
+## **Resources**
 
-in `../apache-kafka-with-go/consumer`
-
-## quickstart consumer console app
-
-```bash
-bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
-```
-
-run this with 
-
-```bash
-go run producer.go 
-```
-
-in `../apache-kafka-with-go/producer`
-
-## quickstart producer and consumer console app
-
-just run both bash scripts above in different terminals
-
-You can also have all 4 running at the same time, it’s okay
-
-# Resources
-
-The tutorial came from this video: https://youtu.be/O69sz842sFs
-
-Guide and commands came from here: https://kafka.apache.org/quickstart
-
-kafka-go package: https://github.com/segmentio/kafka-go
+- **Tutorial Video**: **[YouTube Link](https://youtu.be/O69sz842sFs)**
+- **Official Kafka Quickstart Guide**: **[Apache Kafka Documentation](https://kafka.apache.org/quickstart)**
+- **kafka-go Package**: **[GitHub Repository](https://github.com/segmentio/kafka-go)**
