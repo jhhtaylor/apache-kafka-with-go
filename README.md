@@ -67,9 +67,7 @@ This repository contains a demonstration of using Apache Kafka with Go.
 - **Terminal Tab 4**: Start the Kafka console consumer:
     
     ```bash
-    bashCopy code
     bin/kafka-console-consumer.sh --topic quickstart-events --from-beginning --bootstrap-server localhost:9092
-    
     ```
     
 - **Terminal Tab 5**: Navigate to the **`producer`** directory and run the Go producer:
